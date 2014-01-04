@@ -1,0 +1,11 @@
+/web/bundles/
+/web/assets/*
+/web/js/fos_js_routes.js
+/app/bootstrap*
+/app/cache/*
+/app/logs/*
+/vendor/
+/app/config/deploy.rb
+/app/config/parameters.yml
+/composer.phar
+/composer.lock

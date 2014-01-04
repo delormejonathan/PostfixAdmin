@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+	<title>{% block title %}John Doe's Blog{% endblock %}</title>
+	<meta charset="utf-8">
+	<meta name="description" content="A simple blog by John Doe">
+	<meta name="author" content="John Doe">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% stylesheets filter='cssrewrite, ?yui_css' output='assets/css/main-*.css'
+		'css/vendor/bootstrap/bootstrap.min.css'
+		'css/vendor/bootstrap/bootstrap-glyphicons.css'
+		'css/index.css'
+	%}
+		<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	{% endstylesheets %}
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+	<div id="bar">
+	</div>
+	<div id="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<ul class="head_menu visible-lg">
+						<li {% if (get_action_name() == 'home') %} class="active" {% endif %}><a href="{{ path('blog_index_home') }}">home</a></li>
+						<li {% if (get_action_name() == 'about') %} class="active" {% endif %}><a href="{{ path('blog_index_about' , { username : 'jonathan' }) }}">about</a></li>
+						<li class="logo"><img alt="image" src="{{ asset('img/logo.png') }}" /></li>
+						<li><a href="archive.html">archive</a></li>
+						<li {% if (get_action_name() == 'contact') %} class="active" {% endif %}><a href="{{ path('blog_index_contact') }}">email</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<ul id="menu_responsive" class="head_menu hidden-lg">
+						<li {% if (get_action_name() == 'home') %} class="active" {% endif %}><a href="{{ path('blog_index_home') }}">home</a></li>
+						<li {% if (get_action_name() == 'about') %} class="active" {% endif %}><a href="{{ path('blog_index_about' , { username : 'jonathan' }) }}">about</a></li>
+						<li><a href="#">archive</a></li>
+						<li><a href="#">email</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="body" class="container">
+		<div class="row">
+			<!-- MAIN CONTAINER -->
+			<div id="content" class="col-lg-9">
+				{% block body %}
+				{% endblock %}
+			</div>
+
+			<!-- SIDE NAVIGATION -->
+			<div id="aside" class="col-lg-3 visible-lg">
+				<!-- SEARCH -->
+				<div id="search" class="row">
+					<div class="col-lg-12">
+						<form action="{{ path('blog_index_search') }}" method="get">
+							<input type="text" name="s" class="form-control" placeholder="Type your search and hit enter..." />
+						</form>
+					</div>
+				</div>
+				<!-- CATEGORIES -->
+				<div id="categories" class="row">
+					<div class="col-lg-12">
+						<h5>CATEGORIES</h5>
+						<div class="row">
+							<div class="col-lg-12">
+								<ul>
+									{% for category in getCategories() %}
+										<li><a href="{{ path('blog_index_category' , { id : category.id } ) }}">{{ category.name }}</a></li>
+									{% endfor %}
+									<li><a href="#">View all...</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- ARCHIVES -->
+				<div id="archives" class="row">
+					<div class="col-lg-12">
+						<h5>ARCHIVES <i>by</i>&nbsp;&nbsp;MONTH</h5>
+						<div class="row">
+							<div class="col-lg-12">
+								<ul>
+									<li><a href="#">April 2011</a></li>
+									<li><a href="#">February 2011</a></li>
+									<li><a href="#">January 2011</a></li>
+									<li><a href="#">December 2010</a></li>
+									<li><a href="#">October 2010</a></li>
+									<li><a href="#">July 2010</a></li>
+									<li><a href="#">Typography</a></li>
+									<li><a href="#">Personnal</a></li>
+									<li><a href="#">Freelance</a></li>
+									<li><a href="#">Tips & Advice</a></li>
+									<li><a href="#">Educational</a></li>
+									<li><a href="#">View all...</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- FLICKR -->
+				<div id="flickr" class="row">
+					<div class="col-lg-12">
+						<h5>LATEST <i>on</i>&nbsp; FLICKR</h5>
+						<div class="row">
+						</div>
+					</div>
+				</div>
+				<!-- SPONSORS -->
+				<div id="sponsors" class="row">
+					<div class="col-lg-12">
+						<h5>VISIT <i>our</i>&nbsp;&nbsp;SPONSORS</h5>
+						<div class="row">
+							<div class="col-lg-12">
+								<img alt="image" src="{{ asset('img/blank_large.png') }}" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- FOOTER -->
+	<div id="footer">
+		<div class="container">
+			<p>&copy; 2011 John Doe. All Rights Reserved.</p>
+		</div>
+	</div>
+
+	<!-- SCRIPTS  -->
+		{# Initialisation du bundle de routage dynamique Javascript #}
+		<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+
+		{% if app.environment == 'dev' %}
+			<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+		{% else %}
+			<script src="{{ asset('js/fos_js_routes.js') }}"></script>
+		{% endif %}
+		{% javascripts filter='cssrewrite, ?yui_js' output='assets/js/main-*.js'
+			'js/vendor/jquery-1.9.1.min.js'
+			'js/vendor/bootstrap.min.js'
+			'js/vendor/moment.min.js'
+			'js/vendor/jquery.cookie.js'
+		%}
+			<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+  </body>
+</html>

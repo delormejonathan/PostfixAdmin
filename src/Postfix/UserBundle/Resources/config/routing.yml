@@ -1,0 +1,3 @@
+postfix_user_discussion_homepage:
+    pattern:  /discussion
+    defaults: { _controller: PostfixUserBundle:Discussion:index }

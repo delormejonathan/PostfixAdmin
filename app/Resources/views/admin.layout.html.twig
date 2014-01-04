@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>{% block title %}Blog's Administration{% endblock %}</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
+		{% stylesheets filter='cssrewrite, ?yui_css' output='assets/css/main-*.css'
+			'css/vendor/bootstrap/bootstrap.min.css'
+			'css/vendor/bootstrap/bootstrap-glyphicons.css'
+			'css/vendor/bootstrap-select.min.css'
+			'css/vendor/flick/jquery-ui-1.10.3.custom.min.css'
+			'css/vendor/datetimepicker.css'
+			'css/admin.css'
+		%}
+			<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+		{% endstylesheets %}
+		
+		{% block stylesheets %}
+		{% endblock %}
+	</head>
+	<body>
+
+		<div id="header">
+			<div class="container">
+				<img src="{{ asset('img/logo.png') }}" alt="Logo" />
+			</div>
+		</div>
+		<div id="divider"></div>
+		<div id="container" class="container">
+			{% block body %}
+			{% endblock %}
+		</div>
+		{% block dashboard %}
+		{% endblock %}
+
+		{# Initialisation du bundle de routage dynamique Javascript #}
+		<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+
+		{% if app.environment == 'dev' %}
+			<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+		{% else %}
+			<script src="{{ asset('js/fos_js_routes.js') }}"></script>
+		{% endif %}
+		{% javascripts filter='cssrewrite, ?yui_js' output='assets/js/main-*.js'
+			'js/vendor/jquery-1.9.1.min.js'
+			'js/vendor/jquery-ui-1.10.3.custom.min.js'
+			'js/vendor/bootstrap.min.js'
+			'js/vendor/moment.min.js'
+			'js/vendor/jquery.cookie.js'
+			'js/vendor/bootstrap-datetimepicker.min.js'
+			'js/vendor/bootstrap-datetimepicker.fr.js'
+			'js/vendor/bootbox.min.js'
+			'js/vendor/bootstrap-select.min.js'
+			'js/admin.js'
+		%}
+			<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+
+		{% block custom_javascripts %}
+		{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,24 @@
+{# src/Postfix/IndexBundle/Resources/views/Profile/edit.html.twig #}
+ 
+
+{% extends "PostfixUserBundle::layout.html.twig" %}
+ 
+{% block title %}
+	Gestion du compte | {{ parent() }}
+{% endblock %}
+
+
+
+{% block body %}
+	{% block title_fos %}
+		<h1>Éditer mon compte utilisateur</h1>
+	{% endblock title_fos %}
+	{% block fos %}
+		<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+			{{ form_widget(form) }}
+			<div>
+				<input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+			</div>
+		</form>
+	{% endblock fos %}
+{% endblock body %}

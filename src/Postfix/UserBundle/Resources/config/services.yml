@@ -1,0 +1,17 @@
+parameters:
+#    postfix_user.example.class: Postfix\UserBundle\Example
+
+services:
+#    postfix_user.example:
+#        class: %postfix_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    postfix_user.edit.form.type:
+        class: Postfix\UserBundle\Form\Type\EditFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: postfix_edit_profile }
+    postfix_user.register.form.type:
+        class: Postfix\UserBundle\Form\Type\RegisterFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: postfix_register }

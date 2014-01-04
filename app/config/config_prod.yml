@@ -1,0 +1,19 @@
+imports:
+    - { resource: config.yml }
+    - { resource: parameters.yml }
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+
+
+parameters:
+    router.options.matcher.cache_class: ~ # désactive le cache du routeur
+    router.options.matcher_class: Symfony\Component\Routing\Matcher\ApacheUrlMatcher

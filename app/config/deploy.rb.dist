@@ -1,0 +1,85 @@
+# deploy.rb
+
+# production server
+	set :application,      "blog"
+	set :domain,           "myserver.fr:port"
+	set :user,             "username"
+	set :use_sudo,         true
+	set :deploy_to,        "/path/tofolder/www"
+	set :deploy_via,       :remote_cache
+	default_run_options[:pty] = true
+
+# git remote repository
+	set :scm,              :git
+	set :local_repository, 	   "local_repo"
+	set :repository, 	   "remote_repo"
+	set :branch,           "master"
+	set :shared_files,     ["app/config/parameters.yml"]
+
+# symfony2 parameters	
+	role :web,             domain
+	role :app,             domain
+	role :db,              domain, :primary => true
+	set :shared_children,  [app_path + "/logs", "vendor"]
+	set :use_composer,     true
+	set :update_vendors,   true
+	set :keep_releases,    2
+	set :symfony_env_prod, "prod" 
+	set :dump_assetic_assets, true
+# custom functions
+	# update database schema
+	before "symfony:cache:warmup", "symfony:doctrine:schema:update"
+
+	# setting rights to cache/logs directories
+	after "deploy:restart" do
+		capifony_pretty_print "--> Ensuring cache directory permissions"
+		sudo "chown -R username:www-data #{latest_release}/*"
+		sudo "chmod -R 777 #{latest_release}/#{cache_path}/*"
+		sudo "chmod -R 777 #{latest_release}/app/logs/"
+		capifony_puts_ok
+	end
+
+	# dumping routes to .htaccess
+	after "deploy:restart" do
+		capifony_pretty_print "--> Dumping routes to .htaccess"
+		sudo "rm #{latest_release}/web/.htaccess"
+		sudo "cp #{latest_release}/web/.htaccess.dist #{latest_release}/web/.htaccess"
+		sudo "php #{latest_release}/app/console router:dump-apache -e=prod --no-debug >> #{latest_release}/web/.htaccess"
+		capifony_puts_ok
+	end
+
+	# dumping routes to fos_js_routes.js
+	after "deploy:restart" do
+			capifony_pretty_print "--> Dumping routes to fos_js_routes.js"
+			sudo "php #{latest_release}/app/console fos:js-routing:dump"
+			capifony_puts_ok
+	end
+
+	# after symfony:cache:warmup, reset app/log's permissions
+	after "symfony:cache:warmup" do
+			capifony_pretty_print "--> Resetting folders permissions after cache warmup"
+			sudo "chown -R username:www-data #{latest_release}/*"
+			capifony_puts_ok
+	end
+
+	task :upload_parameters do
+		capifony_pretty_print "--> Uploading parameters.yml"
+		origin_file = "app/config/parameters.yml"
+		destination_file = shared_path + "/app/config/parameters.yml" # Notice the shared_path
+
+		sudo "mkdir -p #{File.dirname(destination_file)}"
+		sudo "chown -R username:www-data #{deploy_to}"
+		top.upload(origin_file, destination_file)
+	end
+
+	after "deploy:setup", "upload_parameters"
+
+	after "deploy:update", "deploy:cleanup" 
+
+
+# IMPORTANT = 0
+# INFO      = 1
+# DEBUG     = 2
+# TRACE     = 3
+# MAX_LEVEL = 3
+logger.level = Logger::IMPORTANT

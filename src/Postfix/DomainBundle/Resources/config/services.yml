@@ -1,0 +1,14 @@
+parameters:
+#    postfix_admin.example.class: Postfix\DomainBundle\Example
+
+services:
+#    postfix_admin.example:
+#        class: %postfix_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    request:
+        class:        Symfony\Component\HttpFoundation\Request
+    postfix.twig.extension:
+        class: Postfix\DomainBundle\Twig\Extension\PostfixDomainExtension
+        arguments:  [@request , @doctrine.orm.entity_manager]
+        tags:
+            - { name: 'twig.extension' }

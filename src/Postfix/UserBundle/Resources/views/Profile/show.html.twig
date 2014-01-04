@@ -1,0 +1,23 @@
+{# src/Sdz/PostfixBundle/Resources/views/layout.html.twig #}
+ 
+
+{% extends "PostfixUserBundle::layout.html.twig" %}
+ 
+{% block title %}
+	Gestion du compte | {{ parent() }}
+{% endblock %}
+
+
+
+{% block body %}
+	{% block title_fos %}
+		<h1>Gérer mon profil</h1>
+	{% endblock title_fos %}
+	{% block fos %}
+		<div class="fos_user_user_show">
+			<p><strong>{{ 'profile.show.lastname'|trans({}, 'FOSUserBundle') }}</strong>: {{ user.lastname }}</p>
+			<p><strong>{{ 'profile.show.firstname'|trans({}, 'FOSUserBundle') }}</strong>: {{ user.firstname }}</p>
+			<p><strong>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</strong>: {{ user.email }}</p>
+		</div>
+	{% endblock fos %}
+{% endblock body %}

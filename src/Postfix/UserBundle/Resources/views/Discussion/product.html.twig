@@ -1,0 +1,51 @@
+{# src/Sdz/PostfixBundle/Resources/views/Postfix/index.html.twig #}
+ 
+{% extends "PostfixCatalogBundle::layout.html.twig" %}
+ 
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block custom_stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/product.css') }}" />
+{% endblock %}
+
+{% block custom_javascripts %}
+	<script src="{{ asset('js/product.js') }}"></script>
+{% endblock %}
+ 
+{% block body %}
+<div id="product" class="row">
+	<div class="span">
+		{% for picture in product.getPictures() %}
+				<a {% if loop.first == true %} class="fancybox" {% else %} class="fancybox hide" {% endif %} rel="gallery1" href="{{ asset ('data/' ~ app.user.username ~ '/' ~ picture.path) }}"  data-toggle="tooltip" data-placement="left" title="Voir d'autres images de ce produit">
+					<img src="{{ asset ('data/' ~ app.user.username ~ '/300_' ~ picture.path) }}" alt=""  class="img-polaroid"/>
+				</a>
+		{% else %}
+			<img src="{{ asset ('img/300_novisual.png') }}" class="img-polaroid" />
+		{% endfor %}
+		
+		<h3>Prix</h3>
+		<p>{{ product.price }} euros par pièce</p>
+	</div>
+	<div class="span7" style="text-align:left;">
+		<h3>{{ product.title }}</h3>
+		<p>{{ product.description|nl2br }}</p>
+		<div class="row">
+			<div class="span">
+				<h3>Quantité</h3>
+				<p>
+					<select id="quantity" class="input-medium">
+						<option value="" selected="selected">Sélection</option>
+					{% for i in 1..product.quantity %}
+						<option value="{{ i }}">{{ i }} pièce{% if not loop.first %}s{% endif %}</option>
+					{% endfor %}
+						
+					</select>
+				<a href="{{ path ( 'postfix_catalog_product_disponibility' , { id : product.id } ) }}" class="btn btn-success hide" data-toggle="tooltip" data-placement="right" title="Votre demande de disponibilité va être transmise au fournisseur, une réponse vous sera transmise dans les plus brefs délais avec des informations complémentaires à propos du produit.">Confirmer la disponibilité</a> 
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

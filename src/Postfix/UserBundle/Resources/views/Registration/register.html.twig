@@ -1,0 +1,19 @@
+{% extends "PostfixUserBundle::layout.html.twig" %}
+ 
+{% block title %}
+	Inscription | {{ parent() }}
+{% endblock %}
+
+
+
+{% block body %}
+	{% block title_fos %}
+		<h1>Inscription au site</h1>
+	{% endblock title_fos %}
+	
+	{% block fos %}
+		{% block fos_user_content %}
+			{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+		{% endblock fos_user_content %}
+	{% endblock fos %}
+{% endblock body %}

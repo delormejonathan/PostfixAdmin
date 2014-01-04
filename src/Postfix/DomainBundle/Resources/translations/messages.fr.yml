@@ -1,0 +1,22 @@
+flashbag:
+    users:
+        add:
+            notice:
+                done: L'entrée a été ajoutée.
+            error:
+                field_empty: Veuillez remplir tous les champs.
+        edit:
+            notice:
+                done: L'entrée a été enregistrée.
+            error:
+                field_empty: Veuillez remplir tous les champs.
+        delete:
+            notice:
+                done: L'entrée a été supprimée.
+            error:
+                field_empty: Veuillez remplir tous les champs.
+articles:
+    form:
+        labels:
+            title: Titre
+            content: Contenu

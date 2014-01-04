@@ -1,0 +1,30 @@
+{# src/Sdz/PostfixBundle/Resources/views/Postfix/index.html.twig #}
+ 
+{% extends "PostfixUserBundle::layout.html.twig" %}
+ 
+{% block title %}
+  {{ parent() }}
+{% endblock %}
+ 
+{% block body %}
+	<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<th>#</th>
+				<th>Expéditeur</th>
+				<th>Titre</th>
+				<th></th>
+			</tr>
+		{% for discussion in discussions %}
+			<tr>
+				<td>{{ discussion.id }}</td>
+				<td>
+					{% for user in discussion.getUsers() if user.username != app.user.username %}
+						<strong>{{ user.username }}</strong>
+					{% endfor %}
+				</td>
+				<td>{{ discussion.title }}</td>
+				<td><a href="{{ path('postfix_catalog_homepage') }}" class="btn btn-default">Voir</a></td>
+			</tr>
+		{% endfor %}
+		</table>
+{% endblock %}

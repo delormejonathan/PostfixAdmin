@@ -1,0 +1,35 @@
+{% extends "PostfixDomainBundle::layout.html.twig" %}
+ 
+{% block title %}
+  Domaines | {{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div id="domains" class="row">
+	<div class="col-lg-12">
+		{% if wo_breadcrumbs() is not empty %}
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="wo_breadcrumb visible-desktop">
+					<div>
+					{{ wo_render_breadcrumbs() }}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="actionbar">
+					<ul>
+						<li><a href="{{ path('postfix_admin_domains_add') }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+						<li><a href="{{ path('postfix_admin_domains_list') }}" class="btn btn-primary"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		{% block sub_body %}
+		{% endblock  %}
+	</div>
+</div>
+{% endblock %}

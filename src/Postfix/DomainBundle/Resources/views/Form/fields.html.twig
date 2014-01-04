@@ -1,0 +1,121 @@
+{% block form_row  %}
+	{{ form_errors(form) }}
+	<div class="form-group form_row">
+		{{ form_label(form) }}
+		{{ form_widget(form) }}
+	</div>
+{% endblock form_row  %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+    	<div class="alert alert-danger">
+        	{{ error.message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+<div class="checkbox">
+	<label>
+		<input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+	</label>
+</div>
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block choice_widget_collapsed %}
+{% spaceless %}
+	<select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control input-sm">
+		{% if empty_value is not none %}
+			<option value="">{{ empty_value|trans({}, translation_domain) }}</option>
+		{% endif %}
+		{% if preferred_choices|length > 0 %}
+			{% set options = preferred_choices %}
+			{{ block('choice_widget_options') }}
+			{% if choices|length > 0 and separator is not none %}
+				<option disabled="disabled">{{ separator }}</option>
+			{% endif %}
+		{% endif %}
+		{% set options = choices %}
+		{{ block('choice_widget_options') }}
+	</select>
+{% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+{% block datetime_widget %}
+{% spaceless %}
+	{% if widget == 'single_text' %}
+		{% set type = type|default('text') %}
+		<div class="input-group form_datetime input-prepend date">
+			<span class="add-on input-group-addon input-small"><i class="glyphicon glyphicon-calendar icon-th"></i></span>
+			<input type="{{ type }}" class="form-control input-small" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+		</div>
+	{% else %}
+		<div {{ block('widget_container_attributes') }}>
+			{{ form_errors(form.date) }}
+			{{ form_errors(form.time) }}
+			{{ form_widget(form.date) }}
+			{{ form_widget(form.time) }}
+		</div>
+	{% endif %}
+{% endspaceless %}
+{% endblock datetime_widget %}
+
+{% block date_widget %}
+{% spaceless %}
+	{% if widget == 'single_text' %}
+		<div class="input-group form_date input-prepend date">
+			<span class="add-on input-group-addon input-small"><i class="glyphicon glyphicon-calendar icon-th"></i></span>
+			<input type="text" class="form-control input-small" {% if value is not empty %}value="{{ value }}" {% endif %}/>
+		</div>
+	{% else %}
+		<div {{ block('widget_container_attributes') }}>
+			{{ form_errors(form.date) }}
+			{{ form_errors(form.time) }}
+			{{ form_widget(form.date) }}
+			{{ form_widget(form.time) }}
+		</div>
+	{% endif %}
+{% endspaceless %}
+{% endblock date_widget %}
+
+
+{% block form_widget_simple %}
+{% spaceless %}
+	{% set type = type|default('text') %}
+	<input class="form-control input-small" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block textarea_widget %}
+{% spaceless %}
+	<textarea class="form-control" {{ block('widget_attributes') }}>{{ value }}</textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+
+{% block choice_widget %}
+{% spaceless %}
+    {% if expanded %}
+        {{ block('choice_widget_expanded') }}
+    {% else %}
+        {{ block('choice_widget_collapsed') }}
+    {% endif %}
+{% endspaceless %}
+{% endblock choice_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        {{ form_label(child) }}
+        {{ form_widget(child) }}
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}

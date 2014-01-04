@@ -1,0 +1,91 @@
+imports:
+    - { resource: security.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: "%kernel.debug%"
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - 'PostfixDomainBundle:Form:fields.html.twig'
+    # globals:
+    #     oAuth2_client_id: %oAuth2_client_id%
+    #     oAuth2_client_secret: %oAuth2_client_secret%
+    #     oAuth2_redirect_uri: %oAuth2_redirect_uri%
+    # cache: true
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ ]
+    java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        yui_js:
+            jar: %kernel.root_dir%/Resources/java/yuicompressor.jar
+        yui_css:
+            jar: %kernel.root_dir%/Resources/java/yuicompressor.jar
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        mapping_types:
+                    enum: string
+
+    orm:
+        auto_generate_proxy_classes: false
+        auto_mapping: true
+
+
+# Stof\DoctrineExtensionBundle configuration
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    auth_mode:  login
+    spool:     { type: memory }
+
+fos_user:
+    db_driver:     orm
+    firewall_name: main
+    user_class:    Postfix\UserBundle\Entity\User
+    # profile:
+    #     form:
+    #         type: intranet_edit_profile
+    # registration:
+    #     form:
+    #         type: intranet_register
+
+white_october_breadcrumbs:
+    separator: ''
