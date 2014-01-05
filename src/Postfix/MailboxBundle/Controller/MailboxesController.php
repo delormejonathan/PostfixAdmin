@@ -37,11 +37,6 @@ class MailboxesController extends Controller
 			
 			if ( $form->isValid() )
 			{
-				$tokenGenerator = $this->container->get('fos_user.util.token_generator');
-				$password = substr($tokenGenerator->generateToken(), 0, 8);
-
-				$mailbox->setPassword($password);
-
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($mailbox);
 				$em->flush();
@@ -123,10 +118,7 @@ class MailboxesController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$tokenGenerator = $this->container->get('fos_user.util.token_generator');
-		$password = substr($tokenGenerator->generateToken(), 0, 8);
-
-		$mailbox->setPassword($password);
+		$mailbox->generatePassword();
 		$em->flush();
 
 		return new Response($mailbox->getPassword());

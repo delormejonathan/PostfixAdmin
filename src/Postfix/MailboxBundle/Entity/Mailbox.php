@@ -5,11 +5,14 @@ namespace Postfix\MailboxBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use Postfix\MailboxBundle\Entity\Redirect;
+
 /**
  * Mailbox
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Postfix\MailboxBundle\Entity\MailboxRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Mailbox
 {
@@ -75,6 +78,44 @@ class Mailbox
     public function getMail()
     {
         return $this->getAlias() . '@' . $this->getDomain()->getName();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * Explication : Quand postfix fait une requête pour délivrer les mails, il est uniquement possible de chercher dans la table Redirect.
+     * Si le redirect aliasprincipal@domain.com => aliasprincipal@domain.com n'existe pas, l'alias principal sera considéré comme in-existant.
+     * Pour rester dans la même logique, cet alias est caché lors de la requête qui cherche les alias secondaire.
+     */
+    public function createDefaultAlias()
+    {
+        $redirect = new Redirect;
+        $redirect->setSource($this->getMail());
+        $redirect->setDestination($this->getMail());
+        $redirect->setMailbox($this);
+        $redirect->setCreator($this->getCreator());
+
+        // Adding to parent entities for persist
+        $this->addRedirect($redirect);
+
+        return $this;
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function generatePassword() {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $count = mb_strlen($chars);
+
+        for ($i = 0, $result = ''; $i < 8; $i++) {
+            $index = rand(0, $count - 1);
+            $result .= mb_substr($chars, $index, 1);
+        }
+
+        $this->password = $result;
+
+        return $this;
     }
 
     /**

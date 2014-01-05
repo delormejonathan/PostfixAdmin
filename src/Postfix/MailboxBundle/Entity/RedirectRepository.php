@@ -21,6 +21,7 @@ class RedirectRepository extends EntityRepository
 								->leftJoin('r.creator', 'c')
 								->addSelect('c')
 								->where('r.destination LIKE :alias')
+								->andWhere('r.source NOT LIKE :alias')
 								->setParameter('alias', $mailbox->getMail())
 								->orderBy('r.source' , 'ASC')
 								->getQuery()

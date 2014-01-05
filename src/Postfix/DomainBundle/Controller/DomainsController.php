@@ -35,28 +35,6 @@ class DomainsController extends Controller
 			
 			if ( $form->isValid() )
 			{
-				$tokenGenerator = $this->container->get('fos_user.util.token_generator');
-				$password = substr($tokenGenerator->generateToken(), 0, 8);
-
-				// adding postmaster's mailbox
-				$mailbox = new Mailbox;
-				$mailbox->setCreator($user);
-				$mailbox->setDomain($domain);
-				$mailbox->setPassword($password);
-				$mailbox->setAlias('postmaster');
-				$mailbox->setDomain($domain);
-
-				$redirect = new Redirect;
-				$redirect->setSource('abuse@' . $domain->getName());
-				$redirect->setDestination('postmaster@' . $domain->getName());
-				$redirect->setMailbox($mailbox);
-				$redirect->setCreator($user);
-
-				// Adding to parent entities for persist
-				$mailbox->addRedirect($redirect);
-				$domain->addMailbox($mailbox);
-
-
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($domain);
 				$em->flush();
