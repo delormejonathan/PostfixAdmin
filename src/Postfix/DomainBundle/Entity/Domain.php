@@ -18,6 +18,11 @@ class Domain
         * @ORM\JoinColumn(nullable=false)
     */
     private $creator;
+    /**
+        * @ORM\OneToMany(targetEntity="Postfix\MailboxBundle\Entity\Mailbox" , mappedBy="domain" , cascade={"persist" ,"remove"})
+        * @ORM\JoinColumn(nullable=false)
+    */
+    private $mailboxes;
 
 	/**
 	 * @var integer
@@ -155,5 +160,38 @@ class Domain
     public function getCreator()
     {
         return $this->creator;
+    }
+
+    /**
+     * Add mailboxes
+     *
+     * @param \Postfix\MailboxBundle\Entity\Mailbox $mailboxes
+     * @return Domain
+     */
+    public function addMailbox(\Postfix\MailboxBundle\Entity\Mailbox $mailboxes)
+    {
+        $this->mailboxes[] = $mailboxes;
+
+        return $this;
+    }
+
+    /**
+     * Remove mailboxes
+     *
+     * @param \Postfix\MailboxBundle\Entity\Mailbox $mailboxes
+     */
+    public function removeMailbox(\Postfix\MailboxBundle\Entity\Mailbox $mailboxes)
+    {
+        $this->mailboxes->removeElement($mailboxes);
+    }
+
+    /**
+     * Get mailboxes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMailboxes()
+    {
+        return $this->mailboxes;
     }
 }

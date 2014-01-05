@@ -1,0 +1,25 @@
+{% extends "PostfixMailboxBundle:Mailboxes:layout.html.twig" %}
+
+{% block sub_body %}
+<h3>Ajouter une boite e-mail</h3>
+<div id="add" class="row">
+	<div class="col-lg-12">
+		<div class="well">
+			<form method="post" {{ form_enctype(form) }}>
+				<div class="row">
+					<div class="col-lg-6">
+						{{ form_row(form.alias) }}
+					</div>
+					<div id="domain_helper" class="col-lg-6">
+						@ {{ domain.name }}
+					</div>
+				</div>
+				{{ form_rest(form) }}
+				<div class="form-group">
+					<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Sauvegarder</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

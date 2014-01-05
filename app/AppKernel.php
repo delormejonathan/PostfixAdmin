@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Postfix\UserBundle\PostfixUserBundle(),
             new Postfix\DomainBundle\PostfixDomainBundle(),
+            new Postfix\MailboxBundle\PostfixMailboxBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

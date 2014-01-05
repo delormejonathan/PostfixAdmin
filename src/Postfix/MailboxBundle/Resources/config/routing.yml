@@ -1,0 +1,42 @@
+# MAILBOXES
+postfix_mailboxes_add:
+    pattern:  /domain/{id}/mailboxes/add
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:add }
+postfix_mailboxes_edit:
+    pattern:  /domain/{domain_id}/mailboxes/edit/{mailbox_id}
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:edit }
+    requirements:
+        id:  \d+
+postfix_mailboxes_delete:
+    pattern:  /mailboxes/delete/{id}
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:delete }
+    requirements:
+        id:  \d+
+postfix_mailboxes_list:
+    pattern:  /domain/{id}
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:list }
+postfix_mailboxes_password:
+    pattern:  /mailboxes/password/{id}
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:password }
+    options:
+        expose: true
+postfix_mailboxes_active:
+    pattern:  /mailboxes/active/{id}
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:active }
+    options:
+        expose: true
+postfix_mailboxes_alias_add:
+    pattern:  /mailboxes/{id}/alias/add
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:aliasAdd }
+    options:
+        expose: true
+postfix_mailboxes_alias_active:
+    pattern:  /mailboxes/{id}/alias/active/{alias_id}
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:aliasActive }
+    options:
+        expose: true
+postfix_mailboxes_alias_delete:
+    pattern:  /mailboxes/{id}/alias/delete/{alias_id}
+    defaults: { _controller: PostfixMailboxBundle:Mailboxes:aliasDelete }
+    options:
+        expose: true

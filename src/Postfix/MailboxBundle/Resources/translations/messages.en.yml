@@ -1,0 +1,22 @@
+flashbag:
+    users:
+        add:
+            notice:
+                done: Entry added.
+        edit:
+            notice:
+                done: Entry saved.
+        delete:
+            notice:
+                done: Entry deleted.
+articles:
+    form:
+        labels:
+            title: Title
+            content: Content
+            categories: Categories
+
+categories:
+    form:
+        labels:
+            name: Name

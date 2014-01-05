@@ -11,9 +11,34 @@ body
 
 #header
 {
+	position: relative;
 	padding-top: 25px;
-	padding-bottom: 25px;
+	height: 170px;
 	background-color: #fbfbfb;
+}
+#header #menu
+{
+	position:absolute;
+	bottom: 0px;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+#header #menu li
+{
+	display: inline;
+}
+#header #menu li a
+{
+	font-size: 1.2em;
+	padding: 5px 15px;
+}
+#header #menu li.active a,
+#header #menu li a:hover
+{
+	color: white;
+	background-color: #5e5e5e;
+	text-decoration: none;
 }
 #divider
 {
@@ -21,7 +46,7 @@ body
 	height: 1px;
 	background-color: #acacac;
 	margin-bottom: 25px;
-	box-shadow: 0px 1px 0.5px #aaa; 
+	box-shadow: 0px 1px 0.5px #5e5e5e; 
 }
 
 /*.well

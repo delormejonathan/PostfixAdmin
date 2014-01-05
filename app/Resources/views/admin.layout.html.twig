@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>{% block title %}Blog's Administration{% endblock %}</title>
+		<title>{% block title %}PostFix Administration{% endblock %}</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
@@ -29,6 +29,14 @@
 		<div id="header">
 			<div class="container">
 				<img src="{{ asset('img/logo.png') }}" alt="Logo" />
+				<ul id="menu">
+					<li {% if get_controller_name() == 'domains' %}class="active"{% endif %}><a href="{{ path('postfix_domains_list') }}">Domaines</a></li>
+					{% if domain is defined %}
+						<li {% if get_controller_name() == 'mailboxes' %}class="active"{% endif %}><a href="{{ path('postfix_mailboxes_list' , { id : domain.id }) }}">Boites</a></li>
+					{% endif %}
+					<li><a href="">Utilisateurs</a></li>
+					<li><a href="">Déconnexion</a></li>
+				</ul>
 			</div>
 		</div>
 		<div id="divider"></div>
@@ -53,6 +61,9 @@
 			'js/vendor/bootstrap.min.js'
 			'js/vendor/moment.min.js'
 			'js/vendor/jquery.cookie.js'
+			'js/vendor/noty/jquery.noty.js'
+			'js/vendor/noty/default.js'
+			'js/vendor/noty/bottomRight.js'
 			'js/vendor/bootstrap-datetimepicker.min.js'
 			'js/vendor/bootstrap-datetimepicker.fr.js'
 			'js/vendor/bootbox.min.js'
@@ -62,7 +73,7 @@
 			<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}
 
-		{% block custom_javascripts %}
+		{% block javascripts %}
 		{% endblock %}
 	</body>
 </html>

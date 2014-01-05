@@ -24,8 +24,11 @@ fos_login_failure:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
-postfix_domain:
+postfix_domains:
     resource: "@PostfixDomainBundle/Resources/config/routing.yml"
+    prefix:   /
+postfix_mailboxes:
+    resource: "@PostfixMailboxBundle/Resources/config/routing.yml"
     prefix:   /
 postfix_user:
     resource: "@PostfixUserBundle/Resources/config/routing.yml"

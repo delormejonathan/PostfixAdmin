@@ -1,0 +1,7 @@
+parameters:
+#    postfix_admin.example.class: Postfix\MailboxBundle\Example
+
+services:
+#    postfix_admin.example:
+#        class: %postfix_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

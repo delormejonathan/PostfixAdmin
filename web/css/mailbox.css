@@ -1,0 +1,38 @@
+/* MAILBOXES ADD */
+#mailboxes #domain_helper
+{
+	padding-top: 30px;
+	padding-left: 0px;
+	font-weight: bold;
+}
+#mailboxes #informations
+{
+	color: #393939;
+}
+#mailboxes #informations tr
+{
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	font-size: 1.2em;
+}
+#mailboxes #informations tr th
+{
+	width: 30%;
+}
+#mailboxes #informations tr:first-child,
+#mailboxes #informations tr:first-child th
+{
+	border-top: 0;
+	border-bottom: 1px solid #444444 !important;
+}
+#mailboxes #informations tr:first-child th
+{
+	width: 100%;
+	text-align: center;
+	color:white;
+	background-color: #3b97ff;
+}
+#mailboxes #password
+{
+	margin-left: 10px;
+}

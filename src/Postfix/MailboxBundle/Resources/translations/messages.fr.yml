@@ -15,8 +15,8 @@ flashbag:
                 done: L'entrée a été supprimée.
             error:
                 field_empty: Veuillez remplir tous les champs.
-domains:
+mailboxes:
     form:
         labels:
-            name: Nom de domaine
-            active: Activé ?
+            alias: Alias principal
+            active: Activé

@@ -1,35 +1,17 @@
 # DOMAINS
-postfix_admin_domains_add:
+postfix_domains_add:
     pattern:  /domains/add
     defaults: { _controller: PostfixDomainBundle:Domains:add }
-postfix_admin_domains_edit:
+postfix_domains_edit:
     pattern:  /domains/edit/{id}
     defaults: { _controller: PostfixDomainBundle:Domains:edit }
     requirements:
         id:  \d+
-postfix_admin_domains_delete:
+postfix_domains_delete:
     pattern:  /domains/delete/{id}
     defaults: { _controller: PostfixDomainBundle:Domains:delete }
     requirements:
         id:  \d+
-postfix_admin_domains_list:
+postfix_domains_list:
     pattern:  /
     defaults: { _controller: PostfixDomainBundle:Domains:list }
-
-# CATEGORIES
-postfix_admin_categories_add:
-    pattern:  /categories/add
-    defaults: { _controller: PostfixDomainBundle:Categories:add }
-postfix_admin_categories_edit:
-    pattern:  /categories/edit/{id}/{page}
-    defaults: { _controller: PostfixDomainBundle:Categories:edit , page : 1 }
-    requirements:
-        id:  \d+
-postfix_admin_categories_delete:
-    pattern:  /categories/delete/{id}
-    defaults: { _controller: PostfixDomainBundle:Categories:delete }
-    requirements:
-        id:  \d+
-postfix_admin_categories_list:
-    pattern:  /categories/{page}
-    defaults: { _controller: PostfixDomainBundle:Categories:list , page : 1 }
