@@ -9,7 +9,7 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         main:
@@ -24,7 +24,7 @@ security:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
                 always_use_default_target_path: false
-                default_target_path: /administration
+                default_target_path: /
                 failure_path: fos_login_failure
             logout:
                 path:   fos_user_security_logout
@@ -32,6 +32,8 @@ security:
             remember_me:
                 key:        %secret% # %secret% est un parametre de parameters.yml
 
+
     access_control:
-        - { path: ^/administration, roles: ROLE_ADMIN }
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_SUPER_ADMIN }

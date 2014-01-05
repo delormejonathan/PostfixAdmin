@@ -3,9 +3,15 @@
 namespace Postfix\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
+
 use Postfix\UserBundle\Entity\User;
 use Postfix\UserBundle\Form\Type\UserType;
 
+
+/**
+	@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+*/
 class UsersController extends Controller
 {
     public function addAction()
