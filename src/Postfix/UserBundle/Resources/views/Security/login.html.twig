@@ -1,10 +1,4 @@
 {% extends "::login.layout.html.twig" %}
- 
-{% block title %}
-	My account | {{ parent() }}
-{% endblock %}
-
-
 
 {% block body %}
 	{% block fos %}
@@ -18,7 +12,7 @@
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">
 				<div class="well">
-					<legend>Access to private area</legend>
+					<legend>Authentification</legend>
 					<form action="{{ path("fos_user_security_check") }}" method="post">
 						<div class="form-group">
 							<label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
