@@ -36,3 +36,11 @@
 {
 	margin-left: 10px;
 }
+#mailboxes #chevron-right
+{
+	text-align: center;
+	line-height: 85px;
+}
+#mailboxes #chevron-right .span
+{
+}

@@ -92,6 +92,7 @@ class Mailbox
         $redirect->setSource($this->getMail());
         $redirect->setDestination($this->getMail());
         $redirect->setMailbox($this);
+        $redirect->setDomain($this->getDomain());
         $redirect->setCreator($this->getCreator());
 
         // Adding to parent entities for persist

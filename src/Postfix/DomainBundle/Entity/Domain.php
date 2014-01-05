@@ -78,6 +78,7 @@ class Domain
 		$redirect->setSource('abuse@' . $this->getName());
 		$redirect->setDestination('postmaster@' . $this->getName());
 		$redirect->setMailbox($mailbox);
+		$redirect->setDomain($this);
 		$redirect->setCreator($this->getCreator());
 
 		// Adding to parent entities for persist

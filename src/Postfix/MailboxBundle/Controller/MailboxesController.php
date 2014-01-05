@@ -95,12 +95,13 @@ class MailboxesController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
 
-		$mailboxes = $em->getRepository('PostfixMailboxBundle:Mailbox')->findAll();
+		$mailboxes = $em->getRepository('PostfixMailboxBundle:Mailbox')->findBy(array('domain' => $domain) , array('alias' => 'ASC'));
+		$externals = $em->getRepository('PostfixMailboxBundle:Redirect')->findBy(array('domain' => $domain , 'external' => true));
 		
 		$breadcrumbs = $this->get("white_october_breadcrumbs");
 		$breadcrumbs->addItem($domain->getName(), $this->get("router")->generate("postfix_mailboxes_list" , array('id' => $domain->getId())));
 		$breadcrumbs->addItem("Boites e-mail");
-		return $this->render('PostfixMailboxBundle:Mailboxes:list.html.twig' , array ( 'domain' => $domain , 'mailboxes' => $mailboxes ) );
+		return $this->render('PostfixMailboxBundle:Mailboxes:list.html.twig' , array ( 'domain' => $domain , 'mailboxes' => $mailboxes , 'externals' => $externals ) );
 	}
 	public function deleteAction(Mailbox $mailbox)
 	{
@@ -158,6 +159,7 @@ class MailboxesController extends Controller
 				$alias->setDestination($mailbox->getMail());
 				$alias->setCreator($user);
 				$alias->setMailbox($mailbox);
+				$alias->setDomain($mailbox->getDomain());
 
 				$em->persist($alias);
 				$em->flush();

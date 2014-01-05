@@ -15,6 +15,8 @@ postfix_mailboxes_delete:
 postfix_mailboxes_list:
     pattern:  /domain/{id}
     defaults: { _controller: PostfixMailboxBundle:Mailboxes:list }
+
+# EDIT AJAX
 postfix_mailboxes_password:
     pattern:  /mailboxes/password/{id}
     defaults: { _controller: PostfixMailboxBundle:Mailboxes:password }
@@ -40,3 +42,14 @@ postfix_mailboxes_alias_delete:
     defaults: { _controller: PostfixMailboxBundle:Mailboxes:aliasDelete }
     options:
         expose: true
+
+# REDIRECTS FOR DOMAIN
+postfix_mailboxes_redirects_external_add:
+    pattern:  /domain/{domain_id}/redirects/external/{redirect_id}
+    defaults: { _controller: PostfixMailboxBundle:Redirects:externalAdd , redirect_id : 0 }
+postfix_mailboxes_redirects_external_delete:
+    pattern:  /redirects/external/delete/{id}
+    defaults: { _controller: PostfixMailboxBundle:Redirects:externalDelete }
+postfix_mailboxes_redirects_group_add:
+    pattern:  /domain/{id}/redirects/group/add
+    defaults: { _controller: PostfixMailboxBundle:Redirects:groupAdd }

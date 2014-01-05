@@ -19,6 +19,11 @@ class Redirect
 	*/
 	private $creator;
 	/**
+		* @ORM\ManyToOne(targetEntity="Postfix\DomainBundle\Entity\Domain")
+		* @ORM\JoinColumn(nullable=false)
+	*/
+	private $domain;
+	/**
 		* @ORM\ManyToOne(targetEntity="Postfix\MailboxBundle\Entity\Mailbox" , inversedBy="redirects")
 		* @ORM\JoinColumn(nullable=true)
 	*/
@@ -55,6 +60,13 @@ class Redirect
 	private $active;
 
 	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="external", type="boolean")
+	 */
+	private $external;
+
+	/**
 	 * @var datetime
 	 *
 	 * @ORM\Column(name="`create`", type="datetime")
@@ -71,6 +83,7 @@ class Redirect
 	{
 		$this->create = new \DateTime;
 		$this->active = true;
+		$this->external = false;
 	}
 
 	public function getSourceUser()
@@ -236,5 +249,51 @@ class Redirect
     public function getMailbox()
     {
         return $this->mailbox;
+    }
+
+    /**
+     * Set external
+     *
+     * @param boolean $external
+     * @return Redirect
+     */
+    public function setExternal($external)
+    {
+        $this->external = $external;
+
+        return $this;
+    }
+
+    /**
+     * Get external
+     *
+     * @return boolean 
+     */
+    public function getExternal()
+    {
+        return $this->external;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param \Postfix\DomainBundle\Entity\Domain $domain
+     * @return Redirect
+     */
+    public function setDomain(\Postfix\DomainBundle\Entity\Domain $domain)
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * Get domain
+     *
+     * @return \Postfix\DomainBundle\Entity\Domain 
+     */
+    public function getDomain()
+    {
+        return $this->domain;
     }
 }

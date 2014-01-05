@@ -30,7 +30,20 @@
 			<div class="col-lg-12">
 				<div class="actionbar">
 					<ul>
-						<li><a href="{{ path('postfix_mailboxes_add' , { id : domain.id }) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+						<li>
+							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+								<span class="glyphicon glyphicon-plus"></span> Ajouter
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{{ path('postfix_mailboxes_add' , { id : domain.id }) }}">Ajouter une boite e-mail</a>
+								</li>
+								<li>
+									<a href="{{ path('postfix_mailboxes_redirects_external_add' , { domain_id : domain.id }) }}">Ajouter une redirection externe</a>
+								</li>
+							</ul>
+						</li>
 						<li><a href="{{ path('postfix_mailboxes_list' , { id : domain.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
 					</ul>
 				</div>
