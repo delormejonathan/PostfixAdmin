@@ -13,28 +13,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class UserRepository extends EntityRepository
 {
-	public function last_logged_in()
-	{
-		$time = new \DateTime;
-		$time->sub(new \DateInterval('PT2M'));
-		return $this->createQueryBuilder('a')
-							->where('a.last_logged_in > :time')
-							->setParameter('time' , $time)
-							->getQuery()
-							->getResult();
-
-	}
-	public function incomingList()
-	{
-		return $this->createQueryBuilder('a')
-							->where('a.roles NOT LIKE :role_partner AND a.roles NOT LIKE :role_super_admin')
-							->setParameter('role_partner' , '%"ROLE_PARTNER"%')
-							->setParameter('role_super_admin' , '%"ROLE_SUPER_ADMIN"%')
-							->orderBy('a.id', 'DESC')
-							->getQuery()
-							->getResult();
-
-	}
 	public function UsersQuickList($nombreParPage , $page)
 	{
 		if ($page < 1) {

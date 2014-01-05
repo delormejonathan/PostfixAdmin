@@ -34,7 +34,7 @@
 					{% if domain is defined %}
 						<li {% if get_controller_name() == 'mailboxes' %}class="active"{% endif %}><a href="{{ path('postfix_mailboxes_list' , { id : domain.id }) }}">Boites</a></li>
 					{% endif %}
-					<li><a href="">Utilisateurs</a></li>
+					<li {% if get_controller_name() == 'users' %}class="active"{% endif %}><a href="{{ path('postfix_users_list') }}">Utilisateurs</a></li>
 					<li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
 				</ul>
 			</div>

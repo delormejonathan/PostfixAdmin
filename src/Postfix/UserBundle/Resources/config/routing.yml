@@ -1,3 +1,18 @@
-postfix_user_discussion_homepage:
-    pattern:  /discussion
-    defaults: { _controller: PostfixUserBundle:Discussion:index }
+
+# USERS
+postfix_users_add:
+    pattern:  /users/add
+    defaults: { _controller: PostfixUserBundle:Users:add }
+postfix_users_edit:
+    pattern:  /users/edit/{id}
+    defaults: { _controller: PostfixUserBundle:Users:edit }
+    requirements:
+        id:  \d+
+postfix_users_delete:
+    pattern:  /users/delete/{id}
+    defaults: { _controller: PostfixUserBundle:Users:delete }
+    requirements:
+        id:  \d+
+postfix_users_list:
+    pattern:  /users
+    defaults: { _controller: PostfixUserBundle:Users:list }

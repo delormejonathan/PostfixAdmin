@@ -1,0 +1,21 @@
+{% extends "PostfixUserBundle:Users:layout.html.twig" %}
+
+{% block sub_body %}
+<h3>Éditer un utilisateur</h3>
+{% include "::alert.html.twig" %}
+<form method="post" {{ form_enctype(form) }}>
+	{{ form_errors(form) }}
+	<div class="well">
+		<legend>Informations de connexion</legend>
+		{{ form_row(form.username) }}
+		{{ form_row(form.plainPassword) }}
+		{{ form_row(form.roles) }}
+		{{ form_row(form._token) }}
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> Sauvegarder</button>
+		</div>
+
+	</div>
+</form>
+{% endblock %}

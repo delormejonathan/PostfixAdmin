@@ -20,13 +20,6 @@ class User extends BaseUser
 		* @ORM\GeneratedValue(strategy="AUTO")
 	*/
 	protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="about", type="text")
-     */
-    private $about;
 	
 	/*
 	 * Get id
