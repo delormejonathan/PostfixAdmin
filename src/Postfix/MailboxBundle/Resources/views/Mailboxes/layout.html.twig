@@ -42,6 +42,9 @@
 								<li>
 									<a href="{{ path('postfix_mailboxes_redirects_external_add' , { domain_id : domain.id }) }}">Ajouter une redirection externe</a>
 								</li>
+								<li>
+									<a href="{{ path('postfix_mailboxes_redirects_group_add' , { domain_id : domain.id }) }}">Ajouter une redirection de groupe</a>
+								</li>
 							</ul>
 						</li>
 						<li><a href="{{ path('postfix_mailboxes_list' , { id : domain.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>

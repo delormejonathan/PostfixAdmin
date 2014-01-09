@@ -27,7 +27,6 @@ class RedirectsController extends Controller
 
 		$domain = $em->getRepository('PostfixDomainBundle:Domain')->find($domain_id);
 		$redirect = $em->getRepository('PostfixMailboxBundle:Redirect')->find($redirect_id);
-		$mailboxes = $em->getRepository('PostfixMailboxBundle:Mailbox')->findByDomain($domain);
 
 		if (null === $redirect)
 		{
@@ -69,27 +68,55 @@ class RedirectsController extends Controller
 		$breadcrumbs = $this->get("white_october_breadcrumbs");
 		$breadcrumbs->addItem($domain->getName(), $this->get("router")->generate("postfix_mailboxes_list" , array('id' => $domain->getId())));
 		$breadcrumbs->addItem("Ajouter une redirection externe");
-		return $this->render('PostfixMailboxBundle:Redirects:add.external.html.twig' , array ( 'domain' => $domain , 'mailboxes' => $mailboxes , 'redirect' => $redirect ) );
+		return $this->render('PostfixMailboxBundle:Redirects:add.external.html.twig' , array ( 'domain' => $domain , 'redirect' => $redirect ) );
 	}
-	public function externalEditAction($domain_id , $redirect_id)
+	public function externalDeleteAction(Redirect $redirect)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$domain_id = $redirect->getDomain()->getId();
+
+		$notice = $this->get('translator')->trans('flashbag.users.delete.notice.done');
+		$this->get('session')->getFlashBag()->add('notice', $notice);
+		$em->remove($redirect);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('postfix_mailboxes_list' , array('id' => $domain_id)));
+	}
+	public function groupAddAction($domain_id , $redirect_id)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
+		$user = $this->get('security.context')->getToken()->getUser();
 
 		$domain = $em->getRepository('PostfixDomainBundle:Domain')->find($domain_id);
 		$redirect = $em->getRepository('PostfixMailboxBundle:Redirect')->find($redirect_id);
+		$mailboxes = $em->getRepository('PostfixMailboxBundle:Mailbox')->findByDomain($domain);
+
+		if (null === $redirect)
+		{
+			$redirect = new Redirect;
+			$redirect->setCreator($user);
+			$redirect->setGroup(true);
+			$redirect->setDomain($domain);
+		}
 
 		// POST submit
 		if( $request->getMethod() == 'POST' )
 		{
+			$post = $request->request;
+
 			$redirect->setSource($post->get('source') . '@' . $domain->getName());
-			$redirect->setDestination($post->get('destination'));
+
+			if (null !== $post->get('destination'))
+				$redirect->setDestination(implode(',', $post->get('destination')));
+			else
+				$redirect->setDestination(null);
 
 			if (! filter_var($redirect->getSource(), FILTER_VALIDATE_EMAIL))
 			{
 				$this->get('session')->getFlashBag()->add('error', 'La source est invalide.');
 			}
-			else if (! filter_var($redirect->getDestination(), FILTER_VALIDATE_EMAIL))
+			else if (null === $redirect->getDestination())
 			{
 				$this->get('session')->getFlashBag()->add('error', 'La destination est invalide.');
 			}
@@ -105,13 +132,13 @@ class RedirectsController extends Controller
 				return $this->redirect($this->generateUrl('postfix_mailboxes_list' , array('id' => $domain->getId())));
 			}
 		}
-		
+
 		$breadcrumbs = $this->get("white_october_breadcrumbs");
 		$breadcrumbs->addItem($domain->getName(), $this->get("router")->generate("postfix_mailboxes_list" , array('id' => $domain->getId())));
 		$breadcrumbs->addItem("Ajouter une redirection externe");
-		return $this->render('PostfixMailboxBundle:Redirects:add.external.html.twig' , array ( 'domain' => $domain , 'redirect' => $redirect ) );
+		return $this->render('PostfixMailboxBundle:Redirects:add.group.html.twig' , array ( 'domain' => $domain , 'mailboxes' => $mailboxes , 'redirect' => $redirect ) );
 	}
-	public function externalDeleteAction(Redirect $redirect)
+	public function groupDeleteAction(Redirect $redirect)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$domain_id = $redirect->getDomain()->getId();

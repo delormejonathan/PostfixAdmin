@@ -67,6 +67,13 @@ class Redirect
 	private $external;
 
 	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="`group`", type="boolean")
+	 */
+	private $group;
+
+	/**
 	 * @var datetime
 	 *
 	 * @ORM\Column(name="`create`", type="datetime")
@@ -84,6 +91,7 @@ class Redirect
 		$this->create = new \DateTime;
 		$this->active = true;
 		$this->external = false;
+		$this->group = false;
 	}
 
 	public function getSourceUser()
@@ -295,5 +303,28 @@ class Redirect
     public function getDomain()
     {
         return $this->domain;
+    }
+
+    /**
+     * Set group
+     *
+     * @param boolean $group
+     * @return Redirect
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return boolean 
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

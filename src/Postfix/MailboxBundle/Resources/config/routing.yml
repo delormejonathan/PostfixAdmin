@@ -44,12 +44,17 @@ postfix_mailboxes_alias_delete:
         expose: true
 
 # REDIRECTS FOR DOMAIN
+# EXTERNALS
 postfix_mailboxes_redirects_external_add:
     pattern:  /domain/{domain_id}/redirects/external/{redirect_id}
     defaults: { _controller: PostfixMailboxBundle:Redirects:externalAdd , redirect_id : 0 }
 postfix_mailboxes_redirects_external_delete:
     pattern:  /redirects/external/delete/{id}
     defaults: { _controller: PostfixMailboxBundle:Redirects:externalDelete }
+# GROUPS
 postfix_mailboxes_redirects_group_add:
-    pattern:  /domain/{id}/redirects/group/add
-    defaults: { _controller: PostfixMailboxBundle:Redirects:groupAdd }
+    pattern:  /domain/{domain_id}/redirects/group/{redirect_id}
+    defaults: { _controller: PostfixMailboxBundle:Redirects:groupAdd , redirect_id : 0 }
+postfix_mailboxes_redirects_group_delete:
+    pattern:  /redirects/group/delete/{id}
+    defaults: { _controller: PostfixMailboxBundle:Redirects:groupDelete }

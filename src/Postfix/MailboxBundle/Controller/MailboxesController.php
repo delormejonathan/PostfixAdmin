@@ -97,11 +97,12 @@ class MailboxesController extends Controller
 
 		$mailboxes = $em->getRepository('PostfixMailboxBundle:Mailbox')->findBy(array('domain' => $domain) , array('alias' => 'ASC'));
 		$externals = $em->getRepository('PostfixMailboxBundle:Redirect')->findBy(array('domain' => $domain , 'external' => true));
+		$groups = $em->getRepository('PostfixMailboxBundle:Redirect')->findBy(array('domain' => $domain , 'group' => true));
 		
 		$breadcrumbs = $this->get("white_october_breadcrumbs");
 		$breadcrumbs->addItem($domain->getName(), $this->get("router")->generate("postfix_mailboxes_list" , array('id' => $domain->getId())));
 		$breadcrumbs->addItem("Boites e-mail");
-		return $this->render('PostfixMailboxBundle:Mailboxes:list.html.twig' , array ( 'domain' => $domain , 'mailboxes' => $mailboxes , 'externals' => $externals ) );
+		return $this->render('PostfixMailboxBundle:Mailboxes:list.html.twig' , array ( 'domain' => $domain , 'mailboxes' => $mailboxes , 'externals' => $externals , 'groups' => $groups ) );
 	}
 	public function deleteAction(Mailbox $mailbox)
 	{
